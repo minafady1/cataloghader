@@ -15,11 +15,12 @@ import requests
 
 app = Flask(__name__)
 CLIENT_ID = json.loads(
-    open('client_secrets.json', 'r').read())['web']['client_id']
+        open('/var/www/catalog/catalog/fb_client_secrets.json', 'r').read())['web']['client_id']
+
 APPLICATION_NAME = "Restaurant Menu Application"
 
 # Connect to Database and create database session
-engine = create_engine('postgresql://catalog:1234@localhost/catalog')
+engine = create_engine('postgresql://catalog:password@localhost/catalog')
 Base.metadata.bind = engine
 
 DBSession = sessionmaker(bind=engine)
@@ -48,8 +49,7 @@ def fbconnect():
         'web']['app_id']
     app_secret = json.loads(
         open('fb_client_secrets.json', 'r').read())['web']['app_secret']
-    url='https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s'
-	% (app_id, app_secret, access_token)
+    url = 'https://graph.facebook.com/oauth/access_token?grant_type=fb_exchange_token&client_id=%s&client_secret=%s&fb_exchange_token=%s' % (app_id, app_secret, access_token)
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     # Use token to get user info from API
@@ -79,8 +79,7 @@ def fbconnect():
     # The token must be stored in the login_session in order to properly logout
     login_session['access_token'] = token
     # Get user picture
-    url='https://graph.facebook.com/v2.8/me/picture?access_token=%s&redirect=0&height=200&width=200' 
-	% token
+    url='https://graph.facebook.com/v2.8/me/picture?access_token=%s&redirect=0&height=200&width=200' % token
     h = httplib2.Http()
     result = h.request(url, 'GET')[1]
     data = json.loads(result)
@@ -96,8 +95,8 @@ def fbconnect():
     output += '!</h1>'
     output += '<img src="'
     output += login_session['picture']
-    output += ' " style = "width: 300px; height: 300px;border-radius: 150px;
-	-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+    output += '  "style = "width: 300px; height: 300px;border-radius: 150px-webkit-border-radius: 150px;-moz-border-radius: 150px;"> '
+
     flash("Now logged in as %s" % login_session['username'])
     return output
 	
@@ -106,8 +105,7 @@ def fbdisconnect():
     facebook_id = login_session['facebook_id']
     # The access token must me included to successfully logout
     access_token = login_session['access_token']
-    url = 'https://graph.facebook.com/%s/permissions?access_token=%s' 
-	% (facebook_id,access_token)
+    url = 'https://graph.facebook.com/%s/permissions?access_token=%s' % (facebook_id,access_token)
     h = httplib2.Http()
     result = h.request(url, 'DELETE')[1]
     return "you have been logged out"
@@ -159,10 +157,9 @@ def gconnect():
     stored_access_token = login_session.get('access_token')
     stored_gplus_id = login_session.get('gplus_id')
     if stored_access_token is not None and gplus_id == stored_gplus_id:
-     response=make_response(json.dumps('Current user is already connected.'),
-     200)
-        response.headers['Content-Type'] = 'application/json'
-        return response
+      response=make_response(json.dumps('Current user is already connected.'),200)
+      response.headers['Content-Type'] = 'application/json'
+      return response
     # Store the access token in the session for later use.
     login_session['access_token'] = credentials.access_token
     login_session['gplus_id'] = gplus_id
@@ -359,10 +356,10 @@ def newMenuItem(restaurant_id):
         return redirect('/login')
     restaurant = session.query(Restaurant).filter_by(id=restaurant_id).one()
     if login_session['user_id'] != restaurant.user_id:
-        return "<script>function myFunction()
+         return '''<script>function myFunction()
 		{alert('You are not authorized to add menu items to this restaurant. 
 		Please create your own restaurant in order to add items.');}
-		</script><body onload='myFunction()'>"
+		</script><body onload='myFunction()'>'''
     if request.method == 'POST':
         newItem = MenuItem(name=request.form['name'], 
 		description=request.form['description'], price=request.form[

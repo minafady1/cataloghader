@@ -3,7 +3,7 @@ from sqlalchemy.orm import sessionmaker
 
 from database_setup import Restaurant, Base, MenuItem, User
 
-engine = create_engine('postgresql://catalog:1234@localhost/catalog')
+engine = create_engine('postgresql://catalog:password@localhost/catalog')
 # Bind the engine to the metadata of the Base class so that the
 # declaratives can be accessed through a DBSession instance
 Base.metadata.bind = engine
@@ -86,10 +86,10 @@ menuItem1 = MenuItem(user_id=1, name="Chicken Stir Fry",
 session.add(menuItem1)
 session.commit()
 menuItem2 = MenuItem(user_id=1, name="Peking Duck",
- description=" A famous duck dish from Beijing[1] that has been prepared since the imperial era. 
+ description=''' A famous duck dish from Beijing[1] that has been prepared since the imperial era. 
  The meat is prized for its thin, crisp skin, 
  with authentic versions of the dish serving mostly the skin and little meat,
- sliced in front of the diners by the cook", price="$25", course="Entree",
+ sliced in front of the diners by the cook''', price="$25", course="Entree",
  restaurant=restaurant2)
 
 session.add(menuItem2)
@@ -113,10 +113,10 @@ session.add(menuItem5)
 session.commit()
 
 menuItem6 = MenuItem(user_id=1, name="Ramen", 
-description="a Japanese noodle soup dish. 
+description='''a Japanese noodle soup dish. 
  It consists of Chinese-style wheat noodles served in a meat- or
  (occasionally) fish-based broth, often flavored with soy sauce or miso,
- and uses toppings such as sliced pork, dried seaweed, kamaboko, and green onions.",
+ and uses toppings such as sliced pork, dried seaweed, kamaboko, and green onions.''',
  price="12", course="Entree", restaurant=restaurant2)
 session.add(menuItem6)
 session.commit()
@@ -125,15 +125,15 @@ restaurant1 = Restaurant(user_id=1, name="Panda Garden")
 session.add(restaurant1)
 session.commit()
 menuItem1 = MenuItem(user_id=1, name="Pho", 
-description="a Vietnamese noodle soup consisting of broth, 
-linguine-shaped rice noodles called banh pho, a few herbs, and meat.",
+description='''a Vietnamese noodle soup consisting of broth, 
+linguine-shaped rice noodles called banh pho, a few herbs, and meat.''',
  price="$8.99", course="Entree", restaurant=restaurant1)
 session.add(menuItem1)
 session.commit()
 menuItem2 = MenuItem(user_id=1, name="Chinese Dumplings", 
- description="a common Chinese dumpling which generally consists of minced meat 
+ description='''a common Chinese dumpling which generally consists of minced meat 
  and finely chopped vegetables wrapped into a piece of dough skin. 
- The skin can be either thin and elastic or thicker.",
+ The skin can be either thin and elastic or thicker.''',
  price="$6.99", course="Appetizer", restaurant=restaurant1)
 session.add(menuItem2)
 session.commit()
@@ -157,8 +157,8 @@ restaurant1 = Restaurant(user_id=1, name="Thyme for That Vegetarian Cuisine ")
 session.add(restaurant1)
 session.commit()
 menuItem1 = MenuItem(user_id=1, name="Tres Leches Cake", 
- description="Rich, luscious sponge cake soaked in sweet milk and
- topped with vanilla bean whipped cream and strawberries.",
+ description='''Rich, luscious sponge cake soaked in sweet milk and
+ topped with vanilla bean whipped cream and strawberries.''',
  price="$2.99", course="Dessert", restaurant=restaurant1)
 session.add(menuItem1)
 session.commit()
@@ -168,19 +168,19 @@ menuItem2 = MenuItem(user_id=1, name="Mushroom risotto",
 session.add(menuItem2)
 session.commit()
 menuItem3 = MenuItem(user_id=1, name="Honey Boba Shaved Snow",
- description="Milk snow layered with honey boba, jasmine tea jelly, 
- grass jelly, caramel, cream, and freshly made mochi", price="$4.50", course="Dessert", restaurant=restaurant1)
+ description='''Milk snow layered with honey boba, jasmine tea jelly, 
+ grass jelly, caramel, cream, and freshly made mochi''', price="$4.50", course="Dessert", restaurant=restaurant1)
 session.add(menuItem3)
 session.commit()
 menuItem4 = MenuItem(user_id=1, name="Cauliflower Manchurian", 
- description="Golden fried cauliflower florets in a midly spiced soya,
- garlic sauce cooked with fresh cilantro, celery, chilies,ginger & green onions",
+ description='''Golden fried cauliflower florets in a midly spiced soya,
+ garlic sauce cooked with fresh cilantro, celery, chilies,ginger & green onions''',
  price="$6.95", course="Appetizer", restaurant=restaurant1)
 session.add(menuItem4)
 session.commit()
 menuItem5 = MenuItem(user_id=1, name="Aloo Gobi Burrito", 
- description="Vegan goodness. Burrito filled with rice, garbanzo beans,
- curry sauce, potatoes (aloo), fried cauliflower (gobi) and chutney. Nom Nom",
+ description='''Vegan goodness. Burrito filled with rice, garbanzo beans,
+ curry sauce, potatoes (aloo), fried cauliflower (gobi) and chutney. Nom Nom''',
  price="$7.95", course="Entree", restaurant=restaurant1)
 session.add(menuItem5)
 session.commit()
@@ -223,8 +223,8 @@ restaurant1 = Restaurant(user_id=1, name="Andala\'s")
 session.add(restaurant1)
 session.commit()
 menuItem1 = MenuItem(user_id=1, name="Lamb Curry",
- description="Slow cook that thang in a pool of tomatoes, 
- onions and alllll those tasty Indian spices. Mmmm.",
+ description='''Slow cook that thang in a pool of tomatoes, 
+ onions and alllll those tasty Indian spices. Mmmm.''',
  price="$9.95", course="Entree", restaurant=restaurant1)
 session.add(menuItem1)
 session.commit()
@@ -273,9 +273,9 @@ menuItem3 = MenuItem(user_id=1, name="Morels on toast (seasonal)",
 session.add(menuItem3)
 session.commit()
 menuItem4 = MenuItem(user_id=1, name="Tandoori Chicken", 
- description="Chicken marinated in yoghurt and seasoned with a spicy mix(chilli, 
+ description='''Chicken marinated in yoghurt and seasoned with a spicy mix(chilli, 
  tamarind among others) and slow cooked in a cylindrical clay or
- metal oven which gets its heat from burning charcoal.",
+ metal oven which gets its heat from burning charcoal.''',
  price="$8.95", course="Entree", restaurant=restaurant1)
 session.add(menuItem4)
 session.commit()
@@ -299,8 +299,8 @@ menuItem1 = MenuItem(user_id=1, name="Super Burrito Al Pastor",
 session.add(menuItem1)
 session.commit()
 menuItem2 = MenuItem(user_id=1, name="Cachapa", 
- description="Golden brown, corn-based Venezuelan pancake; 
- usually stuffed with queso telita or queso de mano, and possibly lechon. ",
+ description='''Golden brown, corn-based Venezuelan pancake; 
+ usually stuffed with queso telita or queso de mano, and possibly lechon. ''',
  price="$7.99", course="Entree", restaurant=restaurant1)
 session.add(menuItem2)
 session.commit()
